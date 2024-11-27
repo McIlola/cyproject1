@@ -42,7 +42,9 @@ def vote(request, question_id):
     with connection.cursor() as cursor:
         cursor.execute(f"SELECT * FROM polls_question WHERE id = {question_id}")
         question_data = cursor.fetchone()
-    
+    """with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM polls_question WHERE id = %s", [question_id])
+        question_data = cursor.fetchone()"""
     if not question_data:
         return HttpResponseForbidden("Question does not exist.")
     question = get_object_or_404(Question, pk=question_id)
